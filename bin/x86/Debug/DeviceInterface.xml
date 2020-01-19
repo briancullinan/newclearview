@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DeviceInterface</name>
+    </assembly>
+    <members>
+        <member name="T:DeviceInterface.DeviceManager">
+            <summary>
+            General manager for connecting and disconnecting to devices.
+            </summary>
+        </member>
+        <member name="T:DeviceInterface.HRFirmware">
+            <summary>
+            This is the HR firmware, when this is replaced, copy and rename, and continue to add functionality to the LatestFirmware class.
+            Functionality on the settings and testing screens is determined based on which classes override the latest functions.
+            Stubs can be created if functions are the same.
+            </summary>
+        </member>
+        <member name="T:DeviceInterface.IControllable">
+            <summary>
+            Controls connections to the ClearView device through a common interface.
+            </summary>
+        </member>
+        <member name="M:DeviceInterface.IControllable.Open">
+            <summary>
+            Open the device for communication.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeviceInterface.IControllable.SetPulseDuration(EPICClearViewDL.Customization.PulseDuration)">
+            <summary>
+            Set the duration of the pulse.
+            </summary>
+            <param name="pulseDuration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeviceInterface.IControllable.SetExposureVoltage(EPICClearViewDL.Customization.Voltage)">
+            <summary>
+            Set the voltage.
+            </summary>
+            <param name="voltage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeviceInterface.IControllable.SetFrequency(EPICClearViewDL.Customization.PWM0Frequency)">
+            <summary>
+            Set the frequency.
+            </summary>
+            <param name="frequency"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeviceInterface.IControllable.StartExposure">
+            <summary>
+            Start the exposure.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeviceInterface.IControllable.StopExposure">
+            <summary>
+            Force the exposure to stop prematurely.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeviceInterface.IControllable.Reset">
+            <summary>
+            Reset the device programatically.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeviceInterface.IControllable.Close">
+            <summary>
+            Close the device.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="E:DeviceInterface.IControllable.DataReceived">
+            <summary>
+            Occurs when data is received from the device.
+            </summary>
+        </member>
+        <member name="P:DeviceInterface.IControllable.UniqueIdentifier">
+            <summary>
+            A unique object that described the location of the hardware device to connect to.
+            </summary>
+        </member>
+        <member name="T:DeviceInterface.ILightable">
+            <summary>
+            Some devices do not include and LED, this interface is used to indicate that.
+            </summary>
+        </member>
+        <member name="M:DeviceInterface.ILightable.SetLED(System.Boolean)">
+            <summary>
+            Turns the LED on or off.
+            </summary>
+            <param name="on"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeviceInterface.IBoostable">
+            <summary>
+            Some devices cannot change voltage, this interface is used to indicate that.
+            </summary>
+        </member>
+        <member name="M:DeviceInterface.IBoostable.SetBoostVoltage(System.Boolean)">
+            <summary>
+            Boost the voltage on the device.
+            </summary>
+            <param name="on"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeviceInterface.HRFirmware.ClearBuffer">
+            <summary>
+            This method is called to clear out the buffer when an error 
+            event has been detected. The attempts to get the communication
+            process back in sync.
+            </summary>
+        </member>
+        <member name="M:DeviceInterface.HRFirmware.IsPrintableCharacter(System.Char)">
+            <summary>
+            Simple utility method to determine if a character is a printable
+            character.
+            </summary>
+            <param name="candidate">Character to check</param>
+            <returns>True or false based on if the character is printable</returns>
+        </member>
+        <member name="M:DeviceInterface.HRFirmware.Close">
+            <summary>
+            Closes the current communication connection to the scanner
+            </summary>
+            <returns>A boolean to indicate either success or failure</returns>
+        </member>
+        <member name="E:DeviceInterface.HRFirmware.DataReceived">
+            <summary>
+            Occurs when data is received from the device.
+            </summary>
+        </member>
+        <member name="T:DeviceInterface.DataReceivedHandler">
+            <summary>
+            Handler for when data is received from the FTDI device.
+            </summary>
+            <param name="data"></param>
+            <param name="formatted"></param>
+        </member>
+        <member name="T:DeviceInterface.STFirmware">
+            <summary>
+            For older version of the device.
+            </summary>
+        </member>
+    </members>
+</doc>

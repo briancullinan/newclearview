@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EPICAnalysis</name>
+    </assembly>
+    <members>
+        <member name="T:EPICAnalysis.Maths">
+            <summary>
+            Commonly used math functions.
+            </summary>
+        </member>
+        <member name="M:EPICAnalysis.Maths.CheckCalibration(System.Drawing.Bitmap,EPICClearViewDL.EntityClasses.DeviceCalibrationSettingEntity,EPICClearViewDL.EntityClasses.ImageEntity@)">
+            <summary>
+            Compare a bitmap against the baseline image using the matlab runtime.
+            </summary>
+            <param name="bitmap">The bitmap for comparison.</param>
+            <param name="settings">The calibration settings to check against.</param>
+            <param name="colorizedEntity"></param>
+            <returns>An ImageCalibrationEntity that has NOT been saved, the caller is responsible for handling the results.</returns>
+        </member>
+        <member name="M:EPICAnalysis.Maths.CompressImage(System.Drawing.Bitmap)">
+            <summary>
+            Deflate an image and return the bytes.
+            </summary>
+            <param name="image">The image to be deflated.</param>
+            <returns>A byte array of the deflated image for storing.</returns>
+        </member>
+        <member name="M:EPICAnalysis.Maths.DetermineColorToUse(System.Double,EPICAnalysis.Maths.FailureRegion,System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Get the color based on region and how far it is from the baseline image.
+            </summary>
+            <param name="diff"></param>
+            <param name="failed"></param>
+            <param name="negMin"></param>
+            <param name="negMax"></param>
+            <param name="posMin"></param>
+            <param name="posMax"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EPICAnalysis.Maths.GetOptimalNoiseLevel(System.Drawing.Bitmap)">
+            <summary>
+            Returns the noise level by finding the center point and counting the number of pixels brighter than 40.
+            If the number of noisy pixels is greater than .0002 than the noise level is incremented.
+            </summary>
+            <param name="bitmap"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EPICAnalysis.Maths.DoesImagePassValidation(System.Drawing.Bitmap,EPICClearViewDL.EntityClasses.DeviceCalibrationSettingEntity,EPICClearViewDL.EntityClasses.ImageEntity@)">
+            <summary>
+            This is the ClearView 1.1.1.2 Calibration routine with these modifications:
+            1) Saving the calibration image to disk is removed, CalibrationImage control
+               is now responsible for saving.
+            2) Copies the image in to a matlab array.
+            3) Always reports to console whether the image has passed or failed.
+            4) Removed BypassCheck because it is just used for interaction with the interface 
+               which is now controlled by the Capture/Calibration.xaml page where it should be.
+            5) Removed FailurePointCount because every use of it referred to a const now defined at the top.
+            6) Logging is handled by throwing exceptions.
+               All other pass and fail data will be reflected in the export.
+               The export is always reachable by the intended users.
+            7) Removed logging because Excel.CreateXLSXFromImageCalibrations includes all the 
+               information it is reporting.
+            8) Removed error file logging because Excel.CreateXLSXFromImageCalibrations includes 
+               all the information it is reporting.
+            9) Uses new determine color routine.
+            </summary>
+            <param name="bitmap"></param>
+            <param name="settings"></param>
+            <param name="colorizedEntity"></param>
+            <returns>True if the image passes the specified intensity range, false if too many pixels are found outside the intensity bound.</returns>
+        </member>
+        <member name="M:EPICAnalysis.Maths.GetImageSectors(System.Drawing.Bitmap,System.Drawing.Bitmap,System.Double,System.Double,System.Double,System.Double,System.String)">
+            <summary>
+            Splits an energized image into different sectors for each finger.
+            </summary>
+            <param name="image"></param>
+            <param name="calibration"></param>
+            <param name="angle"></param>
+            <param name="centerX"></param>
+            <param name="centerY"></param>
+            <param name="noiseLevel"></param>
+            <param name="finger"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EPICAnalysis.Maths.GetAlignment(System.Drawing.Bitmap,System.Drawing.Bitmap)">
+            <summary>
+            Calculates the orientation for the given images.
+            </summary>
+            <param name="energized"></param>
+            <param name="finger"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EPICAnalysis.Maths.LoadMatFile(System.String)">
+            <summary>
+            Loads values from the mat file.
+            </summary>
+            <param name="file"></param>
+        </member>
+        <member name="F:EPICAnalysis.Maths.BaseCalibration">
+            <summary>
+            The calibration matlab file.
+            </summary>
+        </member>
+        <member name="M:EPICAnalysis.Maths.ForceLoad">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:EPICAnalysis.Maths.GCD(System.Int32,System.Int32)">
+            <summary>
+            Find greatest common divisor, usage (IEnumberable&lt;int&gt;)numbers.Aggregate(GCD);
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

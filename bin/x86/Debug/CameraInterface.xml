@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CameraInterface</name>
+    </assembly>
+    <members>
+        <member name="T:CameraInterface.BinMethod">
+            <summary>
+            The method to use for binning.
+            This determines the arithmetic algorithm used to reduces multiple pixels to one pixel.
+            </summary>
+        </member>
+        <member name="F:CameraInterface.BinMethod.Maximum">
+            <summary>
+            Output the maximum value of each component part.
+            </summary>
+        </member>
+        <member name="F:CameraInterface.BinMethod.Average">
+            <summary>
+            Output the average of the values of each component part.
+            </summary>
+        </member>
+        <member name="M:CameraInterface.Binner.Bin(System.Drawing.Bitmap,System.Int32,CameraInterface.BinMethod)">
+            <summary>
+            <para>
+            Bin an image to reduce its size by a scale.
+            Scale is effectively 1/scale.
+            A scale value of 2 would reduce the image to 1/2 its original size.
+            The default scale is 2.
+            </para><para>
+            Binning is performed by calculating the average of the red, green, blue and alpha values
+            for each matrix of pixels with width and height equal to scale.
+            The average values are then used to create a single pixel of the new image.
+            </para><para>
+            Both the width and height of the input image must be evenly divisible by the scale.
+            If not, an expection is throw.
+            </para>
+            </summary>
+            <param name="image">the image to bin</param>
+            <param name="scale">the scaling factor</param>
+            <param name="method">the method to use</param>
+            <returns>new <code>Bitmap</code> containing the binned image</returns>
+            <exception cref="T:System.NotSupportedException">if either width or height of input image is not
+            	evenly divisble by scale</exception>
+        </member>
+        <member name="M:CameraInterface.Binner.GetPixelSize(System.Drawing.Bitmap)">
+            <summary>
+            Get the number of bytes in a pixel.
+            The number of bytes depends on the number of bits that make up a pixel.
+            </summary>
+            <param name="image">a <code>Bitmap</code> containing an image</param>
+            <returns>number of bytes per pixel</returns>
+        </member>
+        <member name="T:CameraInterface.BinningMethod">
+            <summary>
+            Base class for binning method implementations.
+            Provides a factory method for getting the proper subclass that implements the specified method.
+            </summary>
+        </member>
+        <member name="M:CameraInterface.BinningMethod.Bin(System.Byte[],System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Bin the input in the pixels array into the output array.
+            </summary>
+            <param name="pixels">byte array containing all the bytes that make up the input image</param>
+            <param name="output">byte array into which to output the bytes of the binned image</param>
+            <param name="scale">the scaling factor</param>
+            <param name="stride">number of bytes in a single row of pixels</param>
+            <param name="pixelSize">number of byte in a single pixel</param>
+        </member>
+        <member name="M:CameraInterface.BinningMethod.GetInstance(CameraInterface.BinMethod)">
+            <summary>
+            Get an instance that implements the specified method
+            </summary>
+            <param name="method">the bin method to use</param>
+            <returns>subclass instance that implements the method</returns>
+        </member>
+        <member name="T:CameraInterface.AverageMethod">
+            <summary>
+            Binning method that implements an algorithm that determines the average values of the
+            component parts of the input pixels and creates an output pixel of the averages.
+            </summary>
+        </member>
+        <member name="T:CameraInterface.MaxMethod">
+            <summary>
+            Binning method that implements an algorithm that determines the maximum values of the
+            component parts of the input pixels and creates an output pixel of the maximums.
+            </summary>
+        </member>
+        <member name="T:CameraInterface.EmguGeneric">
+            <summary>
+            Controls all other cameras using the Emgu Open CV library.
+            </summary>
+        </member>
+        <member name="T:CameraInterface.ICapturable">
+            <summary>
+            Controls connection to cameras through a common interface.
+            </summary>
+        </member>
+        <member name="M:CameraInterface.ICapturable.Open">
+            <summary>
+            Opens communication with the camera.
+            </summary>
+        </member>
+        <member name="M:CameraInterface.ICapturable.Is(System.String)">
+            <summary>
+            Checks if the display name of a camera is of implemented type.
+            </summary>
+            <param name="hardwareName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CameraInterface.ICapturable.Close">
+            <summary>
+            Closes communication with the camera.
+            </summary>
+        </member>
+        <member name="E:CameraInterface.ICapturable.Captured">
+            <summary>
+            Occurs when a frame is captured and stored in memory.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.ICapturable.FramesPerSecond">
+            <summary>
+            Desired frames per second.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.ICapturable.Brightness">
+            <summary>
+            Brightness adjustment for the camera.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.ICapturable.Gain">
+            <summary>
+            Gain adjustment for the camera.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.ICapturable.Exposure">
+            <summary>
+            The exposure time.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.ICapturable.Height">
+            <summary>
+            The height of the desired output.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.ICapturable.Width">
+            <summary>
+            The width of the desired output.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.ICapturable.DisplayName">
+            <summary>
+            The display name of the camera.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.ICapturable.UniqueIdentifier">
+            <summary>
+            A unique object used to identify the device such as the hardware ID.
+            </summary>
+        </member>
+        <member name="T:CameraInterface.FrameCallback">
+            <summary>
+            The callback for when a frame is captured and stored in memory.
+            </summary>
+            <param name="hBitmap"></param>
+        </member>
+        <member name="T:CameraInterface.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.Properties.Resources.CameraManager_Connect_Error">
+            <summary>
+              Looks up a localized string similar to There was an error connecting to the device..
+            </summary>
+        </member>
+        <member name="P:CameraInterface.Properties.Resources.CameraManager_Disconnect_Error">
+            <summary>
+              Looks up a localized string similar to There was an error diconnecting..
+            </summary>
+        </member>
+        <member name="P:CameraInterface.Properties.Resources.CameraManager_VideoCallback_Error">
+            <summary>
+              Looks up a localized string similar to There was an error reading the video stream..
+            </summary>
+        </member>
+        <member name="T:CameraInterface.Sentech">
+            <summary>
+            Controls Sentech cameras.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.Sentech.Clock">
+            <summary>
+            Sets the clock speed of the camera.
+            </summary>
+        </member>
+        <member name="P:CameraInterface.Sentech.PixelFormat">
+            <summary>
+            Sets the format of the pixels, Sentech supports 8 bit raw, 24 BGR or 32 BGR.
+            </summary>
+        </member>
+        <member name="E:CameraInterface.Sentech.Captured">
+            <summary>
+            Occurs when a frame is captures from the camera.
+            </summary>
+        </member>
+        <member name="T:CameraInterface.Sentech.ClockSpeed">
+            <summary>
+            Modes for the speed of the internal CPU clock in the Sentech camera.
+            </summary>
+        </member>
+        <member name="F:CameraInterface.Sentech.ClockSpeed.Normal">
+            <summary>
+            Runs at 36.818 MHz
+            </summary>
+        </member>
+        <member name="F:CameraInterface.Sentech.ClockSpeed.Dividing4">
+            <summary>
+            Runs at 18.409 MHz
+            </summary>
+        </member>
+        <member name="F:CameraInterface.Sentech.ClockSpeed.Diviging2">
+            <summary>
+            Runs at 9.204 MHz
+            </summary>
+        </member>
+    </members>
+</doc>
